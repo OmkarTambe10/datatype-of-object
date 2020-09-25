@@ -8,27 +8,31 @@ var data = {
         name:"mem1"
     }]
 };
-console.log(Object.keys(data.members[0]))
-var nameKeys= Object.keys(data)
-var newdata = {}
-for(var i = 0 ; i < nameKeys.length; i++){
-	var type = (typeof(data[nameKeys[i]]));
-  	if(type == "string"){
-    	newdata[nameKeys[i]] = type
-    }else if(type == "number"){
-    	newdata[nameKeys[i]] = type
-    }else{
-		//newdata[nameKeys[i]] = type 
-      	if(Array.isArray(data[nameKeys[i]]) == true){
-          	//console.log(data[nameKeys[i]][0])
-          	var a = ittrateArray(data[nameKeys[i]][0])
-        	newdata[nameKeys[i]] = []
-          console.log("newdata",newdata)
-            newdata[nameKeys[i]].push(a)
-        }else{
-        	newdata[nameKeys[i]] = ittrateobject(data[nameKeys[i]])
-        }
-    }
+
+function ittrateData(data){
+	console.log(Object.keys(data.members[0]))
+	var nameKeys= Object.keys(data)
+	var newdata = {}
+	for(var i = 0 ; i < nameKeys.length; i++){
+		var type = (typeof(data[nameKeys[i]]));
+		  if(type == "string"){
+			newdata[nameKeys[i]] = type
+		}else if(type == "number"){
+			newdata[nameKeys[i]] = type
+		}else{
+			//newdata[nameKeys[i]] = type 
+			  if(Array.isArray(data[nameKeys[i]]) == true){
+				  //console.log(data[nameKeys[i]][0])
+				  var a = ittrateArray(data[nameKeys[i]][0])
+				newdata[nameKeys[i]] = []
+			  console.log("newdata",newdata)
+				newdata[nameKeys[i]].push(a)
+			}else{
+				newdata[nameKeys[i]] = ittrateobject(data[nameKeys[i]])
+			}
+		}
+	}
+	return newdata
 }
 
 function ittrateArray(aryObj){
@@ -72,4 +76,20 @@ function ittrateobject(dataObj){
 	}
   return data2
 }
-console.log("newdata",newdata);
+
+var ittratedData = ittrateData(data)
+console.log("ittratedData",ittratedData);
+
+//demo output will b
+//{
+//	name:string
+//	address:{
+//		line1:string,
+//		pincode:number
+//	},
+//	members:[
+//		{
+//			name:string
+//		}
+//	]
+//}
